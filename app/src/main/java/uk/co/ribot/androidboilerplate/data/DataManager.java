@@ -10,7 +10,9 @@ import rx.functions.Func1;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
+import uk.co.ribot.androidboilerplate.data.model.Weather;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
+import uk.co.ribot.androidboilerplate.data.remote.WeatherService;
 
 @Singleton
 public class DataManager {
@@ -18,13 +20,16 @@ public class DataManager {
     private final RibotsService mRibotsService;
     private final DatabaseHelper mDatabaseHelper;
     private final PreferencesHelper mPreferencesHelper;
+    private final WeatherService mWeatherService;
 
     @Inject
     public DataManager(RibotsService ribotsService, PreferencesHelper preferencesHelper,
-                       DatabaseHelper databaseHelper) {
+                       DatabaseHelper databaseHelper, WeatherService weatherService) {
         mRibotsService = ribotsService;
         mPreferencesHelper = preferencesHelper;
         mDatabaseHelper = databaseHelper;
+        mWeatherService = weatherService;
+
     }
 
     public PreferencesHelper getPreferencesHelper() {
@@ -45,4 +50,16 @@ public class DataManager {
         return mDatabaseHelper.getRibots().distinct();
     }
 
+    public Observable<String> getWeather() {
+
+
+        return
+
+                mWeatherService.getWeather().map(new Func1<Weather, String>() {
+                    @Override
+                    public String call(Weather weather) {
+                        return weather.getCurrentObservation().getTempC().toString();
+                    }
+                });
+    }
 }

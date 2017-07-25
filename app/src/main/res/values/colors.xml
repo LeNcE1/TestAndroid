@@ -3,5 +3,10 @@
     <color name="primary">#222222</color>
     <color name="primary_dark">#000000</color>
     <color name="accent">#FFFFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="blue">#4e92df</color>
+    <color name="oranje">#ff9b00</color>
+    <color name="barGrey">#f4f4f4</color>
+    <color name="textGray">#414141</color>
     <color name="gray">#ffdfdfdf</color>
 </resources>

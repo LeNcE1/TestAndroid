@@ -1,10 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
-    </style>
     <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
 
@@ -14,10 +10,10 @@
         <item name="android:textColorPrimary">@color/textGray</item>
         <item name="android:colorBackground">@color/gray</item>
         <item name="android:textColorSecondaryInverse">@color/textGray</item>
-
+        <item name="android:statusBarColor">@color/textGray</item>
         <item name="android:windowBackground">@color/barGrey</item>
         <item name="android:textColorPrimaryInverse">@color/white</item>
         <item name="android:textColorSecondary">@color/textGray</item>
-
+        <item name="android:navigationBarColor">@color/textGray</item>
     </style>
 </resources>
