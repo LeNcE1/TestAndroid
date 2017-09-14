@@ -7,6 +7,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import uk.co.ribot.androidboilerplate.data.remote.CreateService;
+import uk.co.ribot.androidboilerplate.data.remote.ExampleService;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 import uk.co.ribot.androidboilerplate.data.remote.WeatherService;
 import uk.co.ribot.androidboilerplate.injection.ApplicationContext;
@@ -44,6 +46,18 @@ public class ApplicationModule {
     @Singleton
     WeatherService newWeatherService() {
         return WeatherService.Creator.newWeatherService();
+    }
+
+    @Provides
+    @Singleton
+    ExampleService newExampleService() {
+        return ExampleService.Creator.newExampleService();
+    }
+
+    @Provides
+    @Singleton
+    CreateService newCreateService() {
+        return CreateService.Creator.newCreateService();
     }
 
 }

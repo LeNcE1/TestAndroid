@@ -1,6 +1,6 @@
-package uk.co.ribot.androidboilerplate.ui.main;
+package uk.co.ribot.androidboilerplate.ui.user;
 
-import java.util.List;
+import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -10,40 +10,53 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import uk.co.ribot.androidboilerplate.data.DataManager;
-import uk.co.ribot.androidboilerplate.data.model.Example;
-import uk.co.ribot.androidboilerplate.injection.ConfigPersistent;
+import uk.co.ribot.androidboilerplate.data.model.User;
 import uk.co.ribot.androidboilerplate.ui.base.BasePresenter;
 import uk.co.ribot.androidboilerplate.util.RxUtil;
 
-@ConfigPersistent
-public class MainPresenter extends BasePresenter<MainMvpView> {
+
+public class UserPresenter extends BasePresenter<UserMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
 
     @Inject
-    public MainPresenter(DataManager dataManager) {
+    public UserPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
     @Override
-    public void attachView(MainMvpView mvpView) {
+    public void attachView(UserMvpView mvpView) {
         super.attachView(mvpView);
     }
 
     @Override
     public void detachView() {
         super.detachView();
-        if (mSubscription != null) mSubscription.unsubscribe();
+
     }
 
-    public void loadRibots() {
+    public void createUser(User user) {
+
+//        String response = mDataManager.createUser(user);
+//        if (response == null) {
+//            getMvpView().showResponseEmpty();
+//        } else {
+//            if (response.equals("ERROR")) {
+//                getMvpView().showError();
+//            } else
+//
+//                getMvpView().showResponse(response);
+//        }
+
+
         checkViewAttached();
         RxUtil.unsubscribe(mSubscription);
-        mSubscription = mDataManager.getExample()
+        mSubscription = mDataManager.createUser(user)
                 .observeOn(AndroidSchedulers.mainThread())
+
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Example>>() {
+                .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -51,18 +64,20 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                     @Override
                     public void onError(Throwable e) {
                         Timber.e(e, "There was an error loading the ribots.");
+                        Log.e("e= ",e.toString());
                         getMvpView().showError();
                     }
 
+
                     @Override
-                    public void onNext(List<Example> examples) {
-                        if (examples.isEmpty()) {
-                            getMvpView().showRibotsEmpty();
+                    public void onNext(String response) {
+                        if (response == null) {
+                            getMvpView().showResponseEmpty();
                         } else {
-                            getMvpView().showRibots(examples);
+
+                            getMvpView().showResponse(response);
                         }
                     }
                 });
     }
-
 }

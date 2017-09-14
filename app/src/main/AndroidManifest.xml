@@ -20,12 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.login.LoginActivity"
+        <activity
+            android:name=".ui.login.LoginActivity"
             android:label="Авторизация"
             android:theme="@style/LoginTheme">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
@@ -39,7 +39,14 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.user.UserActivity"
 
+            android:label="UserActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

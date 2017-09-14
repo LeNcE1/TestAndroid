@@ -3,9 +3,9 @@ package uk.co.ribot.androidboilerplate.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -17,10 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.ribot.androidboilerplate.R;
-import uk.co.ribot.androidboilerplate.data.SyncService;
-import uk.co.ribot.androidboilerplate.data.model.Ribot;
+import uk.co.ribot.androidboilerplate.data.model.Example;
 import uk.co.ribot.androidboilerplate.ui.base.BaseActivity;
-import uk.co.ribot.androidboilerplate.ui.login.LoginActivity;
+import uk.co.ribot.androidboilerplate.ui.user.UserActivity;
 import uk.co.ribot.androidboilerplate.util.DialogFactory;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
@@ -35,8 +34,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.button2)
-    Button button2;
+    @BindView(R.id.floatingActionButton2)
+    FloatingActionButton floatingActionButton;
+
 
     /**
      * Return an Intent to start this Activity.
@@ -58,12 +58,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         mRecyclerView.setAdapter(mRibotsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         mMainPresenter.attachView(this);
         mMainPresenter.loadRibots();
 
-        if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
-            startService(SyncService.getStartIntent(this));
-        }
     }
 
     @Override
@@ -76,7 +74,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     /***** MVP View methods implementation *****/
 
     @Override
-    public void showRibots(List<Ribot> ribots) {
+    public void showRibots(List<Example> ribots) {
         mRibotsAdapter.setRibots(ribots);
         mRibotsAdapter.notifyDataSetChanged();
     }
@@ -89,13 +87,20 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void showRibotsEmpty() {
-        mRibotsAdapter.setRibots(Collections.<Ribot>emptyList());
+        mRibotsAdapter.setRibots(Collections.<Example>emptyList());
         mRibotsAdapter.notifyDataSetChanged();
         Toast.makeText(this, R.string.empty_ribots, Toast.LENGTH_LONG).show();
     }
 
-    @OnClick(R.id.button2)
+    @OnClick(R.id.floatingActionButton2)
     public void onViewClicked() {
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, UserActivity.class));
     }
+
+//    @OnClick(R.id.button2)
+//    public void onViewClicked() {
+//        startActivity(new Intent(this, LoginActivity.class));
+//    }
+
+
 }

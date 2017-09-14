@@ -10,30 +10,31 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import rx.Observable;
-import uk.co.ribot.androidboilerplate.data.model.Ribot;
-import uk.co.ribot.androidboilerplate.util.MyGsonTypeAdapterFactory;
+import uk.co.ribot.androidboilerplate.data.model.Example;
 
-public interface RibotsService {
+
+public interface ExampleService {
 
     String ENDPOINT = "https://bb-test-server.herokuapp.com/";
 
-    @GET("users")
-    Observable<List<Ribot>> getRibots();
+    @GET("users.json")
+    Observable<List<Example>> getExample();
 
-    /******** Helper class that sets up a new services *******/
     class Creator {
 
-        public static RibotsService newRibotsService() {
+        public static ExampleService newExampleService() {
             Gson gson = new GsonBuilder()
-                    .registerTypeAdapterFactory(MyGsonTypeAdapterFactory.create())
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     .create();
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(RibotsService.ENDPOINT)
+                    .baseUrl(ENDPOINT)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+
+
                     .build();
-            return retrofit.create(RibotsService.class);
+
+
+            return retrofit.create(ExampleService.class);
         }
     }
 }
