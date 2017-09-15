@@ -21,6 +21,7 @@ import rx.functions.Func2;
 import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.SyncService;
 import uk.co.ribot.androidboilerplate.ui.base.BaseActivity;
+import uk.co.ribot.androidboilerplate.ui.user.TextValidation;
 import uk.co.ribot.androidboilerplate.util.NetworkUtil;
 
 public class LoginActivity extends BaseActivity implements LoginMvpView {

@@ -3,6 +3,7 @@ package uk.co.ribot.androidboilerplate.ui.user;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.SyncService;
+import uk.co.ribot.androidboilerplate.data.model.CreateUser;
 import uk.co.ribot.androidboilerplate.data.model.User;
 import uk.co.ribot.androidboilerplate.ui.base.BaseActivity;
 import uk.co.ribot.androidboilerplate.ui.main.MainActivity;
@@ -27,8 +29,8 @@ public class UserActivity extends BaseActivity implements UserMvpView {
     private static final String EXTRA_TRIGGER_SYNC_FLAG =
             "uk.co.ribot.androidboilerplate.ui.user.UserActivity.EXTRA_TRIGGER_SYNC_FLAG";
 
-       @Inject
-   UserPresenter userPresenter;
+    @Inject
+    UserPresenter userPresenter;
     @BindView(R.id.avatar)
     ImageView avatar;
     @BindView(R.id.firstName)
@@ -49,7 +51,7 @@ public class UserActivity extends BaseActivity implements UserMvpView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       activityComponent().inject(this);
+        activityComponent().inject(this);
         setContentView(R.layout.activity_user);
         ButterKnife.bind(this);
         userPresenter.attachView(this);
@@ -58,7 +60,7 @@ public class UserActivity extends BaseActivity implements UserMvpView {
         }
 
 
-        if (getIntent().getIntExtra("Id",-1) == -1) {
+        if (getIntent().getIntExtra("Id", -1) == -1) {
             button.setText("Create");
 
             avatar.setImageResource(R.drawable.ic_face_black_48dp);
@@ -104,34 +106,52 @@ public class UserActivity extends BaseActivity implements UserMvpView {
     }
 
 
-
     @OnClick(R.id.button)
     public void onButtonClicked() {
-        userPresenter.createUser(
-                new User(firstName.getText().toString(),
+        if (firstName.getText().length() > 0 &&
+                lastName.getText().length() > 0 &&
+                new TextValidation().checkMail(email.getText().toString())) {
+
+
+            if (button.getText().equals("Create")) {
+                userPresenter.createUser(
+                        new User(firstName.getText().toString(),
+                                lastName.getText().toString(),
+                                email.getText().toString(),
+                                ""));
+
+            }
+            if (button.getText().equals("Change")) {
+                userPresenter.updateUser(new User(firstName.getText().toString(),
                         lastName.getText().toString(),
                         email.getText().toString(),
-                        ""));
+                        getIntent().getStringExtra("AvatarUrl")));
 
+            }
+        } else {
+            Toast.makeText(this, "поля заполнены не верно", Toast.LENGTH_SHORT).show();
+            Log.e("ErrorInput","ErrorInput");
+        }
     }
 
+
     @Override
-    public void showResponse(String response) {
+    public void showResponse(CreateUser response) {
 
 
-        Toast.makeText(this,response,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Created", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, MainActivity.class));
 
     }
 
     @Override
     public void showResponseEmpty() {
-        Toast.makeText(this,"Empty",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void showError() {
-        Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
 }

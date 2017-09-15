@@ -1,4 +1,4 @@
-package uk.co.ribot.androidboilerplate.ui.login;
+package uk.co.ribot.androidboilerplate.ui.user;
 
 import android.support.annotation.NonNull;
 import android.text.Editable;

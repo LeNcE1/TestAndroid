@@ -13,15 +13,15 @@ import rx.Observable;
 import uk.co.ribot.androidboilerplate.data.model.CreateUser;
 import uk.co.ribot.androidboilerplate.data.model.Users;
 
-public interface CreateService {
+public interface UpdateService {
     String ENDPOINT = "https://bb-test-server.herokuapp.com/";
 
-    @POST("users.json")
-    Observable<CreateUser> postCreate(@Body Users users);
+    @POST("users/1")
+    Observable<CreateUser> postUpdate(@Body Users users);
 
     class Creator {
 
-        public static CreateService newCreateService() {
+        public static UpdateService newUpdateService() {
             Gson gson = new GsonBuilder()
                     .create();
             Retrofit retrofit = new Retrofit.Builder()
@@ -33,7 +33,10 @@ public interface CreateService {
                     .build();
 
 
-            return retrofit.create(CreateService.class);
+            return retrofit.create(UpdateService.class);
         }
+
+
     }
+
 }

@@ -10,6 +10,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import uk.co.ribot.androidboilerplate.data.DataManager;
+import uk.co.ribot.androidboilerplate.data.model.CreateUser;
 import uk.co.ribot.androidboilerplate.data.model.User;
 import uk.co.ribot.androidboilerplate.ui.base.BasePresenter;
 import uk.co.ribot.androidboilerplate.util.RxUtil;
@@ -56,7 +57,7 @@ public class UserPresenter extends BasePresenter<UserMvpView> {
                 .observeOn(AndroidSchedulers.mainThread())
 
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new Subscriber<CreateUser>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -70,7 +71,45 @@ public class UserPresenter extends BasePresenter<UserMvpView> {
 
 
                     @Override
-                    public void onNext(String response) {
+                    public void onNext(CreateUser response) {
+                        Log.e("CreateUser",response.getError()+" "+response.getStatus());
+                        if (response == null) {
+                            getMvpView().showResponseEmpty();
+                        } else {
+
+                            getMvpView().showResponse(response);
+                        }
+                    }
+                });
+    }
+
+    public void updateUser(User user) {
+
+
+
+
+        checkViewAttached();
+        RxUtil.unsubscribe(mSubscription);
+        mSubscription = mDataManager.updateUser(user)
+                .observeOn(AndroidSchedulers.mainThread())
+
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<CreateUser>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e(e, "There was an error loading the ribots.");
+                        Log.e("e= ",e.toString());
+                        getMvpView().showError();
+                    }
+
+
+                    @Override
+                    public void onNext(CreateUser response) {
+                        Log.e("CreateUser",response.getError()+" "+response.getStatus());
                         if (response == null) {
                             getMvpView().showResponseEmpty();
                         } else {

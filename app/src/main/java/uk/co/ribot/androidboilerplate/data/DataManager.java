@@ -13,9 +13,11 @@ import uk.co.ribot.androidboilerplate.data.model.CreateUser;
 import uk.co.ribot.androidboilerplate.data.model.Example;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.data.model.User;
+import uk.co.ribot.androidboilerplate.data.model.Users;
 import uk.co.ribot.androidboilerplate.data.remote.CreateService;
 import uk.co.ribot.androidboilerplate.data.remote.ExampleService;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
+import uk.co.ribot.androidboilerplate.data.remote.UpdateService;
 import uk.co.ribot.androidboilerplate.data.remote.WeatherService;
 
 @Singleton
@@ -27,6 +29,7 @@ public class DataManager {
     private final WeatherService mWeatherService;
     private final ExampleService mExampleService;
     private final CreateService mCreateService;
+    private final UpdateService mUpdateService;
 
     @Inject
     public DataManager(RibotsService ribotsService,
@@ -34,7 +37,8 @@ public class DataManager {
                        DatabaseHelper databaseHelper,
                        WeatherService weatherService,
                        ExampleService exampleService,
-                       CreateService createService
+                       CreateService createService,
+                       UpdateService updateService
     ) {
         mRibotsService = ribotsService;
         mPreferencesHelper = preferencesHelper;
@@ -42,6 +46,7 @@ public class DataManager {
         mWeatherService = weatherService;
         mExampleService = exampleService;
         mCreateService = createService;
+        mUpdateService =updateService;
 
     }
 
@@ -82,10 +87,10 @@ public class DataManager {
 //                });
     }
 
-    private String resp;
+//    private String resp;
 
-    public Observable<String> createUser(User user) {
-        resp=null;
+    public Observable<CreateUser> createUser(User user) {
+//        resp=null;
 
 //        mCreateService.getCreate(user).enqueue(new Callback<CreateUser>() {
 //            @Override
@@ -103,14 +108,20 @@ public class DataManager {
 //        });
 
 
-        return mCreateService.getCreate(user).map(new Func1<CreateUser, String>() {
-            @Override
-            public String call(CreateUser createUser) {
-                return createUser.getStatus();
-            }
-        });
+        return mCreateService.postCreate(new Users(user));
+//                .map(new Func1<CreateUser, String>() {
+//            @Override
+//            public String call(CreateUser createUser) {
+//                return createUser.getStatus();
+//            }
+//        });
 
 
     }
+
+    public Observable<CreateUser> updateUser(User user) {
+
+    return mUpdateService.postUpdate(new Users(user));
+}
 
 }
