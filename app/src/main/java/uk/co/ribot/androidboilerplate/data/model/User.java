@@ -59,7 +59,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "user:{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

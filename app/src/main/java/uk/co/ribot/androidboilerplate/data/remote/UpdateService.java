@@ -11,13 +11,13 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
 import uk.co.ribot.androidboilerplate.data.model.CreateUser;
-import uk.co.ribot.androidboilerplate.data.model.Users;
+import uk.co.ribot.androidboilerplate.data.model.User;
 
 public interface UpdateService {
     String ENDPOINT = "https://bb-test-server.herokuapp.com/";
 
     @POST("users/1")
-    Observable<CreateUser> postUpdate(@Body Users users);
+    Observable<CreateUser> postUpdate(@Body User user);
 
     class Creator {
 

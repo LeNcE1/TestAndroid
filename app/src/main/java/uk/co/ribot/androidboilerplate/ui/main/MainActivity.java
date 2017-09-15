@@ -38,11 +38,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     FloatingActionButton floatingActionButton;
 
 
-    /**
-     * Return an Intent to start this Activity.
-     * triggerDataSyncOnCreate allows disabling the background sync service onCreate. Should
-     * only be set to false during testing.
-     */
+
     public static Intent getStartIntent(Context context, boolean triggerDataSyncOnCreate) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(EXTRA_TRIGGER_SYNC_FLAG, triggerDataSyncOnCreate);
@@ -71,7 +67,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mMainPresenter.detachView();
     }
 
-    /***** MVP View methods implementation *****/
+
 
     @Override
     public void showRibots(List<Example> ribots) {
@@ -97,10 +93,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         startActivity(new Intent(this, UserActivity.class));
     }
 
-//    @OnClick(R.id.button2)
-//    public void onViewClicked() {
-//        startActivity(new Intent(this, LoginActivity.class));
-//    }
+
 
 
 }

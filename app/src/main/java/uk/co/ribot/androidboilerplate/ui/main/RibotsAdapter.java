@@ -80,6 +80,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     public void itemClickAdapter(Context context,int position) {
         Example example = mRibots.get(position);
         Intent intent = new Intent(context, UserActivity.class);
+
         intent.putExtra("Id", example.getId());
         if (example.getAvatarUrl() == null) {
             intent.putExtra("AvatarUrl", "");
