@@ -110,7 +110,9 @@ public class UserActivity extends BaseActivity implements UserMvpView {
     public void onButtonClicked() {
         if (firstName.getText().length() > 0 &&
                 lastName.getText().length() > 0 &&
-                new TextValidation().checkMail(email.getText().toString())) {
+           //     new TextValidation().checkMail(email.getText().toString()))
+                email.getText().length()>0)
+        {
 
 
             if (button.getText().equals("Create")) {
