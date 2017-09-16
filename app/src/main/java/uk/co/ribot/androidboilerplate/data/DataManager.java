@@ -1,5 +1,10 @@
 package uk.co.ribot.androidboilerplate.data;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,7 +67,25 @@ public class DataManager {
 
     public Observable<CreateUser> updateUser(User user) {
 
-    return mUpdateService.postUpdate(user);
+        JSONObject j=new JSONObject();
+        JSONObject jj=new JSONObject();
+        try {
+            j.put("first_name","Foo");
+            j.put("last_name","Bar");
+            j.put("email","foo@bar.com");
+            j.put("avatar_url","");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+
+            jj.put("user",j);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("JJ",jj.toString());
+
+        return mUpdateService.postUpdate(user);
 }
 
 }

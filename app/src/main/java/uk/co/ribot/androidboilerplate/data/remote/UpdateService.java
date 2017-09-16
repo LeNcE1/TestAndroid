@@ -14,9 +14,14 @@ import uk.co.ribot.androidboilerplate.data.model.CreateUser;
 import uk.co.ribot.androidboilerplate.data.model.User;
 
 public interface UpdateService {
+
+    //неверный url
+
     String ENDPOINT = "https://bb-test-server.herokuapp.com/";
 
-    @POST("users/1")
+    //    @POST("users/1.json")
+//    Observable<CreateUser> postUpdate(@Body JSONObject jj);
+    @POST("users/1.json")
     Observable<CreateUser> postUpdate(@Body User user);
 
     class Creator {
@@ -28,8 +33,6 @@ public interface UpdateService {
                     .baseUrl(ENDPOINT)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-
-
                     .build();
 
 
